@@ -101,7 +101,7 @@ int main(int argc, char **argv){
     int polinomius[inputsize/k][k];
     for(i = 0; i < inputsize/k ; i++){
       for(j = 0; j < k; j++){
-        polinomius[i][j] = atoi(buffer[i*k + j]);
+        polinomius[i][j] = buffer[i*k + j] - '0'; // http://stackoverflow.com/questions/26024259/passing-argument-1-of-atoi-makes-pointer-from-integer-without-a-cast-can-any-b
       }
     }
 
