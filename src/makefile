@@ -1,0 +1,7 @@
+TARGET1=visualSSS.c
+TARGET2=share.c
+TARGET3=visualSSS
+CC=gcc
+CFLAGS=  
+$(TARGET3): $(TARGET1) $(TARGET2)
+	$(CC) $(CFLAGS) -o	$(TARGET3) $(TARGET1) $(TARGET2)

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "share.h"
 
 char* loadfile(char *file);
 
@@ -84,26 +85,16 @@ int main(int argc, char **argv){
   printf("divideOrRetrive: %i, secret: %s, k: %i, n: %i, dir: %s\n", divideOrRetrive, secret_image, k, n, dir);
 
   if(divideOrRetrive == 0){
-    // Aca dejo en buffer la imagen secreta
-    FILE *f1 = fopen(secret_image, "r");
-    fseek(f1, 0, SEEK_SET);
-    int inputsize = ftell(f1); //its about text's size
-    char buffer[inputsize];
-
-    for(i = 0; i < inputsize; i++)
-    {
-      fscanf(f1, "%c", &buffer[i]);
-    }
-    if(inputsize % k != 0){
-      printf("EL VALOR DE K TIENE QUE SER DIVISOR DE LA CANTIDAD DE PIXELES DE LA IMAGEN\n");
-      exit(1);
-    }
+    share(secret_image,k);
+    printf("Despues de share");
+  /*
     int polinomius[inputsize/k][k];
     for(i = 0; i < inputsize/k ; i++){
       for(j = 0; j < k; j++){
         polinomius[i][j] = buffer[i*k + j] - '0'; // http://stackoverflow.com/questions/26024259/passing-argument-1-of-atoi-makes-pointer-from-integer-without-a-cast-can-any-b
       }
     }
+    */
 
   }
 
@@ -117,4 +108,3 @@ int error(int *current_state){
   printf("%i\n", *current_state);
   *current_state = ERROR;
 }
-
