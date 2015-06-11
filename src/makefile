@@ -1,5 +1,5 @@
 TARGET1=visualSSS.c
-TARGET2=share.c
+TARGET2=share.c retrive.c
 TARGET3=visualSSS
 CC=gcc
 CFLAGS=  
