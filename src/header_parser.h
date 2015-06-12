@@ -13,5 +13,6 @@
 #define HEADER_SIZE 54
 
 void retrive(int n, int k, char * secretFileName, IMAGE ** stegos);
+char* get_image_content(IMAGE* image, char* image_name);
 
 #endif /* HEADER_PARSER_H_ */

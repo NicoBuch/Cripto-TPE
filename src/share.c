@@ -8,20 +8,22 @@ void share(char* secret_image, int k){
   printf("Imagen comienza: %u\n", image->start_image);
   printf("Imagen ancho: %u\n", image->width);
   printf("Imagen alto: %u\n", image->height);
+
+
+  //Leo la imagen
+
+
   free(image);
 
   // Aca dejo en buffer la imagen secreta
-  // FILE *f1 = fopen(secret_image, "r");
-  // fseek(f1, 0 , SEEK_END);
-  // int inputSize = ftell(f1); //its about text's size
-  // fseek(f1, 0 , SEEK_SET);
+  char* image_content = get_image_content(image,secret_image);
   // char buffer[inputSize];
   // char * image;
-  // int i = 0;
-  // for(i = 0; i < inputSize; i++)
-  // {
-  //   fscanf(f1, "%c", &buffer[i]);
-  // }
+  int i = 0;
+  for(i = 0; i < 200; i++)
+  {
+    printf("%d", (int)*(image_content+i));
+  }
   //
   //
   //
