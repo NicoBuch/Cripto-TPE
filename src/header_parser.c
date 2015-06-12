@@ -17,8 +17,12 @@ void parse_header(IMAGE* image, char* image_name){
   //   printf("%c\n",header[i]);
   // }
 
-  unsigned int start_image = ((header[11] << 8) + (header[10]));
+  unsigned int start_image = ((header[13] << 24) + (header[12] << 16) + (header[11] << 8) + (header[10]));
+  unsigned int width = ((header[21] << 24) + (header[20] << 16) + (header[19] << 8) + (header[18]));
+  unsigned int height = ((header[25] << 24) + (header[24] << 16) + (header[23] << 8) + (header[22]));
 
   image->start_image = start_image;
+  image->width = width;
+  image->height = height;
 
 }

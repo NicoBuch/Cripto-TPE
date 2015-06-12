@@ -6,6 +6,8 @@ void share(char* secret_image, int k){
   IMAGE *image = (IMAGE *)malloc(sizeof(IMAGE));
   parse_header(image,secret_image);
   printf("Imagen comienza: %u\n", image->start_image);
+  printf("Imagen ancho: %u\n", image->width);
+  printf("Imagen alto: %u\n", image->height);
   free(image);
 
   // Aca dejo en buffer la imagen secreta
