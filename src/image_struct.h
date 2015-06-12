@@ -8,6 +8,7 @@
 typedef struct {
     unsigned int size;               /* File size in bytes        */
     int width,height;                /* Width and height of image */
+    unsigned int start_image;
 } IMAGE;
 
 #endif /* IMAGE_STRUCT_H_ */
