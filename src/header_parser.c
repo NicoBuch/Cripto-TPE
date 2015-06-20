@@ -32,10 +32,17 @@ char* get_image_content(IMAGE* image, char* image_name){
   FILE *f1 = fopen(image_name, "r");
   fseek(f1, 0 , SEEK_END);
   int inputSize = ftell(f1);
-  fseek(f1, image->start_image , SEEK_SET);
+  fseek(f1, /*image->start_image*/image->start_image , SEEK_SET);
 
   char *image_content = malloc(image->width * image->height + 1);
   fread(image_content, sizeof(char), image->width * image->height, f1);
   fclose(f1);
+
+  int i = 0;
+  for(i = 0; i < 200; i++)
+  {
+    printf("%c", *(image_content+i));
+  }
+
   return image_content;
 }

@@ -12,18 +12,18 @@ void share(char* secret_image, int k){
 
   //Leo la imagen
 
+  char* image_content = get_image_content(image,secret_image);
 
   free(image);
 
   // Aca dejo en buffer la imagen secreta
-  char* image_content = get_image_content(image,secret_image);
   // char buffer[inputSize];
   // char * image;
-  int i = 0;
-  for(i = 0; i < 200; i++)
-  {
-    printf("%d", (int)*(image_content+i));
-  }
+  // int i = 0;
+  // for(i = 0; i < 200; i++)
+  // {
+  //   printf("%d", (int)(*(image_content+i)));
+  // }
   //
   //
   //
