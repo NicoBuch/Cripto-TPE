@@ -91,6 +91,25 @@ int encode(image_t* secret, int k, int n, char * dir) {
     return -1;
 }
 
+void k_encode(image_t** shadows, image_t* secret, int shadow_count, int k){
+    int i,j;
+    int polynomius[k];
+    for(i = 0; i< secret->size - secret->offset; i += k){
+        for(j = i; j< i+k; j++){
+            polynomius[j-i] = secret->bytes[j];
+        }
+        for(j = 1; j <= shadow_count; j++){
+            
+        }
+    }
+    //Itero de a k bytes
+        //cada byte es un coef del pol
+        //por las n shadows genero un x y un y del pol
+        //Escribo en esa shadow el x en el header y el y dentro de la imagen
+
+
+}
+
 void k_2_encode(image_t** shadows, image_t* secret, int shadow_count) {
     int index, current_shadow, j, authentication_bit = 0;
     //int **coefficient_matrix = calloc(sizeof(int*),shadow_count);
@@ -111,7 +130,7 @@ void k_2_encode(image_t** shadows, image_t* secret, int shadow_count) {
         secret_second_byte = secret->bytes[index + 1];
         for (current_shadow = 0; current_shadow < shadow_count; current_shadow++) {
             shadow_first_byte = shadows[current_shadow]->bytes[index];
-            decal_first_shadow_byte = shadow_first_byte >> decal;
+            decal_firt_shadow_byte = shadow_first_byte >> decal;
             shadow_second_byte = shadows[current_shadow]->bytes[index + 1];
             decal_second_shadow_byte = shadow_second_byte >> (decal+1);
             // while (checkLinealDependencyK2(index, current_shadow, decal_first_shadow_byte, decal_second_shadow_byte, shadows, shadow_count) == 1) {

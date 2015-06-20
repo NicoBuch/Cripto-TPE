@@ -29,7 +29,7 @@ image_t* read_image(const char* filename) {
 	img->header = calloc(img->offset+1, sizeof (unsigned char));
 	fread(img->header, sizeof(unsigned char), img->offset, file);
 
-  unsigned short x = (img->header[9] << 8) + img->header[8];
+  unsigned short x = (img->header[HIDEN_X_2] << HIDEN_X_1) + img->header[HIDEN_X_1];
   img->hidden_x = x;
 
 	img->bytes = calloc(img->size - img->offset + 1,sizeof (unsigned char));
@@ -43,6 +43,8 @@ void write_image(image_t* img) {
   if (file) {
     fwrite(img->header, img->offset, 1, file);
     fwrite(img->bytes, img->size - img->offset, 1, file);
+    fseek(file,HIDEN_X_1,SEEK_SET);
+    fwrite(img->hidden_x,2,1,file);
     fclose(file);
   }
   return;
