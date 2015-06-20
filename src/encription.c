@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "file.h"
 #include "encription.h"
 #include "time.h"
@@ -13,6 +14,7 @@ int checkLinealDependencyK2(int, int, byte, byte, image_t**, int);
 int checkLinealDependencyK3(int, int, byte, byte, byte, image_t**, int);
 char * byte_to_binary(int);
 int modular_inverse(int i);
+int evaluate_polynomius(int* polynomius, x, k);
 
 int modInverse(int i) {
     return inverse(i);
@@ -24,7 +26,7 @@ char * byte_to_binary(int byte) {
     binary[0] = '\0';
     for (; longg > 0; longg >>= 1) {
 	int aux = (byte & longg);
-	
+
         strcat(binary, (aux == longg) ? "1" : "0");
     }
     return binary;
@@ -34,7 +36,7 @@ int
 xorf(unsigned char * hash, int length) {
     int i;
     char * hashb = calloc(sizeof (char), 1024);
-  
+
     for (i = 0; i < length; i++) {
         strcat(hashb, byte_to_binary((int) hash[i]));
     }
@@ -53,8 +55,7 @@ int xorcalc(char * h) {
 }
 
 int encode(image_t* secret, int k, int n, char * dir) {
-    int shadow_count = n;
-    image_t * shadows[4];
+    image_t * shadows[n];
 
     if (k == 2) {
         image_t ** shadows = read_images_from_dir(dir, n != 0 ? n : 2);
@@ -92,22 +93,34 @@ int encode(image_t* secret, int k, int n, char * dir) {
 }
 
 void k_encode(image_t** shadows, image_t* secret, int shadow_count, int k){
-    int i,j;
+    int i,j,y;
     int polynomius[k];
+    //Itero de a k bytes
+        //cada byte es un coef del pol
+        //por las n shadows genero un x y un y del pol
+        //Escribo en esa shadow el x en el header y el y dentro de la imagen
     for(i = 0; i< secret->size - secret->offset; i += k){
         for(j = i; j< i+k; j++){
             polynomius[j-i] = secret->bytes[j];
         }
         for(j = 1; j <= shadow_count; j++){
-            
+            y = evaluate_polynomius(polynomius, j, k);
+
         }
     }
-    //Itero de a k bytes
-        //cada byte es un coef del pol
-        //por las n shadows genero un x y un y del pol
-        //Escribo en esa shadow el x en el header y el y dentro de la imagen
+
+    for(j = 1; j <= shadow_count; j++){
+        shadows[j]->hidden_x = j;
+    }
 
 
+}
+
+int evaluate_polynomius(int* polynomius, x, k){
+    int i, sum = 0;
+    for(i = 0; i<k; i++){
+        sum += polynomius[i] * pow(x, i);
+    }
 }
 
 void k_2_encode(image_t** shadows, image_t* secret, int shadow_count) {
@@ -140,7 +153,7 @@ void k_2_encode(image_t** shadows, image_t* secret, int shadow_count) {
             // }
             result = (decal_first_shadow_byte * secret_first_byte + decal_second_shadow_byte * secret_second_byte) % 251;
             shadows[current_shadow]->bytes[index] &= 0b11110000;
-	    shadows[current_shadow]->bytes[index + 1] &= 0b11100000;           
+	    shadows[current_shadow]->bytes[index + 1] &= 0b11100000;
             shadows[current_shadow]->bytes[index] |= result >> 4;
           	//ONLY 3 . 1 FOR AUTHENTICATION BIT !!
             shadows[current_shadow]->bytes[index + 1] |= result & 0b00001111;
@@ -223,7 +236,7 @@ void k_3_encode(image_t** shadows, image_t* secret, int shadow_count) {
             result = (decal_first_shadow_byte * secret_first_byte + decal_second_shadow_byte * secret_second_byte + decal_third_shadow_byte * secret_third_byte) % 251;
             shadows[current_shadow]->bytes[index] &= 0b11111000;
             shadows[current_shadow]->bytes[index + 1] &= 0b11111000;
-	    shadows[current_shadow]->bytes[index + 2] &= 0b11111000;	
+	    shadows[current_shadow]->bytes[index + 2] &= 0b11111000;
 	     shadows[current_shadow]->bytes[index] |= result >> 5;
             shadows[current_shadow]->bytes[index + 1] |= (result & 0b00011100) >> 2;
             shadows[current_shadow]->bytes[index + 2] |= (result & 0b00000011);

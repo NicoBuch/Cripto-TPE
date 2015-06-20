@@ -11,9 +11,6 @@
 
 #define MODULUS 251
 
-// void decrypt_bytes_k2(image_t * secret_image, image_t ** images, int index, int image_qty);
-// void decrypt_bytes_k3(image_t * secret_image, image_t ** images, int index, int image_qty);
-// void decrypt_bytes_k8(image_t * secret_image, image_t ** images, int index, int image_qty);
 void decrypt_bytes(image_t * secret_image, image_t ** images, int index, int image_qty, int k);
 int * resolve_matrix(int** polynomials, int k);
 char get_mask(char k);
@@ -53,11 +50,6 @@ image_t * decrypt(char * directory, int k, char * img_name) {
   secret_image->header = (unsigned char *) malloc(secret_image->offset);
   memcpy(secret_image->header, images[0]->header, images[0]->offset);
 
-	// void (*decrypt_bytes[7]) (image_t *, image_t **, int, int);
-	// decrypt_bytes[0] = &decrypt_bytes_k2;
-	// decrypt_bytes[1] = &decrypt_bytes_k3;
- //  decrypt_bytes[6] = &decrypt_bytes_k8;
-
   int i;
   for (i = 0; i < secret_image->size - secret_image->offset; i += k) {
       decrypt_bytes(secret_image, images, i, image_qty, k);
@@ -72,12 +64,12 @@ void decrypt_bytes(image_t * img, image_t ** imgs, int index, int image_qty, int
   int** polynomials = (int**)malloc(sizeof(int*)* image_qty);
   for(i = 0; i < image_qty; i++){
     polynomials[i] = (int *) malloc((k+1) * sizeof(int));
-  } 
+  }
   char aux_byte = 0;
   char mask = get_mask(k);
   /*Retrieve shadows from the 8 bytes starting in index in each image*/
   for(i=0; i< image_qty; i++){
-    for(j = index; j < index+k ; j++){  
+    for(j = index; j < index+k ; j++){
       aux_byte = aux_byte << (8/k);
       aux_byte |= imgs[i]->bytes[j] & mask;
     }
@@ -112,9 +104,9 @@ int * resolve_matrix(int** polynomials, int k){
       if(row > col){
         x = (inv*polynomials[row][col]) % MODULUS;
         for(index_in_row = col ; index_in_row < k+1; index_in_row++){
-          polynomials[row][index_in_row] = 
+          polynomials[row][index_in_row] =
             mod(polynomials[row][index_in_row] - polynomials[col][index_in_row]*x, MODULUS);
-        } 
+        }
       }
     }
   }
@@ -125,9 +117,9 @@ int * resolve_matrix(int** polynomials, int k){
     for(row = col-1; row >= 0; row--){
       x = (inv*polynomials[row][col]) % MODULUS;
       for(index_in_row = k ; index_in_row >= col; index_in_row--){
-        polynomials[row][index_in_row] = 
+        polynomials[row][index_in_row] =
           mod(polynomials[row][index_in_row] - polynomials[col][index_in_row]*x, MODULUS);
-      } 
+      }
     }
   }
 
@@ -139,7 +131,7 @@ int * resolve_matrix(int** polynomials, int k){
   }
   return coeficients;
 
-} 
+}
 
 
 int mod(num, base){
