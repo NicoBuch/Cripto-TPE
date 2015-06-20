@@ -28,6 +28,10 @@ image_t* read_image(const char* filename) {
 
 	img->header = calloc(img->offset+1, sizeof (unsigned char));
 	fread(img->header, sizeof(unsigned char), img->offset, file);
+
+  unsigned short x = (img->header[9] << 8) + img->header[8];
+  img->hidden_x = x;
+
 	img->bytes = calloc(img->size - img->offset + 1,sizeof (unsigned char));
 	fread(img->bytes, sizeof(unsigned char), img->size - img->offset, file);
 	fclose(file);
