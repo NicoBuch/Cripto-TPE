@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
     encode(read_image(image), k, n, dir);
   }
 
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 image_t*  extract_image(char* filename) {

@@ -41,10 +41,8 @@ image_t * decrypt(char * directory, int k, char * img_name) {
 
   image_t * secret_image = (image_t *) malloc(sizeof(image_t));
   secret_image->id = img_name;
-  printf("Image name : %s\n" , images[0]->id);
   secret_image->size = images[0]->size;
   secret_image->offset = images[0]->offset;
-  printf("hiden x: %d\n", images[0]->hidden_x);
   secret_image->bytes = (unsigned char *) malloc(secret_image->size - secret_image->offset);
   secret_image->header = (unsigned char *) malloc(secret_image->offset);
   memcpy(secret_image->header, images[0]->header, images[0]->offset);
