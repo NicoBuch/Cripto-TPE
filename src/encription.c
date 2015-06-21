@@ -40,13 +40,12 @@ void k_encode(image_t** shadows, image_t* secret, int shadow_count, int k){
     for(i = 0; i< secret->size - secret->offset; i += k){
         for(j = i; j< i+k; j++){
             polynomius[j-i] = secret->bytes[j];
-            // printf(" %d ", polynomius[j-i]);
         }
         for(x = 1; x <= shadow_count; x++){
             unsigned char mask = mask_last_bit;
             for(p = 1; p < 8/k; p++){
                 mask = mask << 1 | 0x01;
-            } 
+            }
             y = evaluate_polynomius(polynomius, x, k);
             for(j = 0 ; j<k ; j++){
                 //Hay que poner un bit en cada byte
@@ -55,7 +54,7 @@ void k_encode(image_t** shadows, image_t* secret, int shadow_count, int k){
                 bit_to_put = bit_to_put | (y & (mask << j * 8/k));
                 bit_to_put = bit_to_put >> j*8/k;
                 //En cada byte pongo 8/K bits.
-                shadows[x-1]->bytes[i+k-1-j] = (shadows[x-1]->bytes[i+k-1-j] & full_mask<<(8/k)) | bit_to_put; 
+                shadows[x-1]->bytes[i+k-1-j] = (shadows[x-1]->bytes[i+k-1-j] & full_mask<<(8/k)) | bit_to_put;
             }
         }
     }

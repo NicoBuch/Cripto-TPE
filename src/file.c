@@ -10,7 +10,7 @@ image_t* read_image(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (file == NULL) {
         printf("Error while reading BMP Image \n");
-        return NULL;
+        exit(EXIT_FAILURE);
     }
     image_t* img = malloc(sizeof(struct tagImage));
 
@@ -49,8 +49,10 @@ void write_image(image_t* img) {
     // itoa(img->hiden_x, x, 10);
     fwrite(&img->hidden_x,2,1,file);
     fclose(file);
+    return;
   }
-  return;
+  printf("Error while writing image: %s\n", img->id);
+  exit(EXIT_FAILURE);
 }
 
 void printImage(image_t* img) {

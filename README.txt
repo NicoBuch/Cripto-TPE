@@ -2,13 +2,7 @@ TPE 2 Criptografía y Seguridad
 
 Requerimientos;
 
-libreria SSL DEV
-
-Modo de instalacion:
-apt-get install libssl-dev
-
-
-Ejecutar luego 'make'
+Ejecutar 'make'
 
 Luego ejecutar ./sss
 
@@ -18,6 +12,6 @@ Parametros obligatorios:
         -secret <archivo>: Nombre de la imagen a encriptar o el nombre de la salida a la hora de desencriptar.
 
 Parametros optativos:
-        --dir <directorio>: Directorio de donde obtener las imágenes.
+        -dir <directorio>: Directorio de donde obtener las imágenes.
         -n <número>: Cantidad de sombras en las que se distribuye.
 
