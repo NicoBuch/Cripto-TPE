@@ -9,7 +9,6 @@
 #include "file.h"
 #include "itoa.h"
 
-#define MODULUS 251
 
 void decrypt_bytes(image_t * secret_image, image_t ** images, int index, int image_qty, int k);
 int * resolve_matrix(int** polynomials, int k);

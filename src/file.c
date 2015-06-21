@@ -41,10 +41,13 @@ image_t* read_image(const char* filename) {
 void write_image(image_t* img) {
 	FILE * file = fopen(img->id, "w+");
   if (file) {
+
     fwrite(img->header, img->offset, 1, file);
     fwrite(img->bytes, img->size - img->offset, 1, file);
     fseek(file,HIDEN_X_1,SEEK_SET);
-    fwrite(img->hidden_x,2,1,file);
+    // char x[2];
+    // itoa(img->hiden_x, x, 10);
+    fwrite(&img->hidden_x,2,1,file);
     fclose(file);
   }
   return;

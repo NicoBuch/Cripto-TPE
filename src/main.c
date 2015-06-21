@@ -14,24 +14,9 @@
 
 image_t* extract_image(char* filename);
 
-/*int main(){
-	// image_t* secret_image = extract_image("src\\secret.bmp");
-	// encode(read_image("src/d1.bmp"), 2);
-	// image_t* secret_image = decrypt("src/secret/k3", 3);
-	image_t* secret_image = decrypt("resources/grupo2k2", 2);
-	write_image(secret_image);
-	// image_t* encrypted = extract_image("src\\secret.bmp");
-	// encode(encrypted,2,2);
-	// image_t* decrypted = decrypt("src\\secret\\k2", 2);
-	// image_t* decrypted = decrypt("resources\\grupo2k2", 2);
-	// decrypted->id = "src\\cdtmalbois.bmp";
-	// write_image(decrypted);
-  return 0;
-}*/
 
 int main(int argc, char* argv[]) {
-
-  //-------Begin parsing arguments
+  //Parseo argumentos
   int isRecovery = FALSE;
   int k = -1;
   int n = 0;
@@ -39,7 +24,6 @@ int main(int argc, char* argv[]) {
   char * dir = calloc(sizeof(char), 40);
 
   int opt = 0;
-
   static struct option long_options[] = {
         {"secret",    required_argument, 0,  's' },
         {"dir",       required_argument, 0,  'i' },
@@ -81,9 +65,9 @@ int main(int argc, char* argv[]) {
     //image_t* secret_image = extract_image("src\\secret.bmp");
     //int result = encode(secret_image,2);
 
-	assure(k != -1, "You must specify k.\n");
-	assure(k == 2 || k == 3 || k == 8, "Wrong value for k.\n");
-	assure(dir[0] != 0, "Please specify a directory.\n");
+  assure(k != -1, "You must specify k.\n");
+  assure(k == 2 || k == 4 || k == 8, "Wrong value for k.\n");
+  assure(dir[0] != 0, "Please specify a directory.\n");
 
   if (isRecovery) {
     //recovery
